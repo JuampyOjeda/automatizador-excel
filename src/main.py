@@ -22,6 +22,7 @@ logging.basicConfig(
 # Pasos del flujo, en orden
 PASOS = [
     BASE_DIR / "src" / "generar_datos.py",
+    BASE_DIR / "src" / "validar_datos.py",
     BASE_DIR / "src" / "limpiar_datos.py",
     BASE_DIR / "src" / "generar_reporte.py",
     BASE_DIR / "src" / "organizar_archivos.py",
