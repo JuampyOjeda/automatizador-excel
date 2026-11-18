@@ -48,7 +48,7 @@ def normalizar_textos(df):
     for columna in ["region", "producto"]:
         df[columna] = (
             df[columna]
-            .asstype("string")                  # Convierte el contenido en texto
+            .astype("string")                  # Convierte el contenido en texto
             .str.strip()                        # Elimina espacios al inicio y al final
             .str.replace("!", "", regex=False)  # Elimina los signos
             .str.strip()
@@ -152,3 +152,18 @@ def validar_datos(df):
     rechazados = df[df["motivo_rechazo"] != ""].copy()
 
     return validos, rechazados
+
+def guardar_resultados(validos, rechazados):
+    """Guarda los registros válidos y rechazados en Excel."""
+    ARCHIVO_VALIDOS.parent.mkdir(parents=True, exist_ok=True)
+    validos = validos.drop(columns=["motivo_rechazo"])
+    validos.to_excel(ARCHIVO_VALIDOS, index=False)
+    rechazados.to_excel(ARCHIVOS_RECHAZADOS, index=False)
+
+    print(f"Registros válidos: {len(validos)}")
+    print(f"Registros rechazados: {len(rechazados)}")
+
+if __name__ == "__main__":
+    df = cargar_datos()
+    validos, rechazados = validar_datos(df)
+    guardar_resultados(validos, rechazados)
